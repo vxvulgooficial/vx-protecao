@@ -78,7 +78,7 @@
               <button class="btn cyan" data-acao="AUTOR">TROCAR AUTOR</button>
               <button class="btn danger" data-acao="UNLOCKFORMAT">LIBERAR FORMATAÇÃO</button>
             </div>
-            <div class="dica"><b>Um clique:</b> gera, assina e publica no GitHub. O aparelho pega na próxima verificação (até 15 min).</div>
+            <div class="dica"><b>Um clique:</b> gera, assina e publica no GitHub. O aparelho pega em segundos.</div>
           </div>
 
           <div class="card">
@@ -324,6 +324,8 @@
             <input id="adminUrl" type="text">
             <label for="adminMin">Intervalo em minutos (mín. 15)</label>
             <input id="adminMin" type="number" min="15" value="15">
+            <label for="adminSeg">Intervalo rápido em segundos (5 a 60)</label>
+            <input id="adminSeg" type="number" min="5" max="60" value="15">
             <div class="linha-botoes">
               <button id="btnAdminAtivarAuto" class="btn primary">APLICAR ATIVAÇÃO</button>
               <button id="btnAdminDesativarAuto" class="btn">APLICAR DESATIVAÇÃO</button>

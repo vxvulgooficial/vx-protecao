@@ -328,6 +328,26 @@
       });
   }
 
+  function manifestoLimpo() {
+    return {
+      versionCode: parseInt(PADRAO.versionCode, 10) || 12,
+      versionName: PADRAO.versao,
+      url: apkPublica(),
+      sha256: estado.sha || PADRAO.sha
+    };
+  }
+
+  // Um comando deixado no manifesto volta a ser aplicado sempre que outro
+  // comando muda o "ultimo id" conhecido pelo aparelho. Limpar depois de
+  // publicar evita que LOCK/ALERT antigos reaparecam.
+  function agendarLimpeza(m) {
+    if (!m.command) return;
+    clearTimeout(agendarLimpeza._t);
+    agendarLimpeza._t = setTimeout(function () {
+      publicarManifesto(manifestoLimpo()).catch(function () { });
+    }, 45000);
+  }
+
   function publicarManifesto(m) {
     var g = dadosGithub();
     if (!g.token) {
@@ -384,6 +404,7 @@
       })
       .then(function () {
         registrar('Aplicado', (m.command || 'manifesto') + ' • publicado no GitHub');
+        agendarLimpeza(m);
       });
   }
 
@@ -644,6 +665,14 @@
     });
 
     $('btnConectar').addEventListener('click', verificarConexao);
+    $('btnLimparComando').addEventListener('click', function () {
+      toast('Limpando comando do manifesto...');
+      publicarManifesto(manifestoLimpo()).then(function () {
+        toast('Comando removido do site.');
+      }).catch(function (e) {
+        toast('Não limpou: ' + (e && e.message ? e.message : 'erro'));
+      });
+    });
     $('btnTestarGithub').addEventListener('click', testarGithub);
     $('btnSalvarConfig').addEventListener('click', salvarConfig);
     $('btnSair').addEventListener('click', function () {

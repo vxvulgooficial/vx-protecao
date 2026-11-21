@@ -33,8 +33,8 @@
       return {
         segredo: s.segredo || PADRAO.segredo,
         endpoint: corrigirDonoAntigo(s.endpoint) || PADRAO.endpoint,
-        versao: s.versao || PADRAO.versao,
-        versionCode: s.versionCode || PADRAO.versionCode,
+        versao: PADRAO.versao,
+        versionCode: PADRAO.versionCode,
         urlApk: corrigirDonoAntigo(s.urlApk) || PADRAO.apk,
         // Se o APK mudou, o hash salvo deixa de valer e volta ao oficial.
         sha: (s.shaBase === PADRAO.sha && s.sha) ? s.sha : PADRAO.sha,
@@ -301,8 +301,8 @@
 
   function manifestoComando(cmd, msg, autor) {
     var m = {
-      versionCode: parseInt(estado.versionCode, 10) || 12,
-      versionName: estado.versao || PADRAO.versao,
+      versionCode: parseInt(PADRAO.versionCode, 10) || 12,
+      versionName: PADRAO.versao,
       url: apkPublica(),
       sha256: estado.sha || PADRAO.sha
     };
@@ -467,8 +467,8 @@
 
   function gerarManifesto() {
     var m = {
-      versionCode: parseInt(val('upCode') || estado.versionCode, 10) || 12,
-      versionName: val('upVersao') || estado.versao,
+      versionCode: parseInt(val('upCode') || PADRAO.versionCode, 10) || 12,
+      versionName: val('upVersao') || PADRAO.versao,
       url: val('upUrl') || absolutizar(estado.urlApk),
       sha256: val('apkSha') || estado.sha || 'COLOQUE_O_SHA256_DO_APK'
     };

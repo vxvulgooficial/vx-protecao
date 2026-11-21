@@ -371,12 +371,14 @@
       'Accept': 'application/vnd.github+json',
       'Authorization': 'Bearer ' + g.token,
       'Content-Type': 'application/json',
-      'X-GitHub-Api-Version': '2022-11-28'
+      'X-GitHub-Api-Version': '2022-11-28',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'
     };
     var conteudo = btoa(unescape(encodeURIComponent(JSON.stringify(m, null, 2))));
 
     return verificarRepo().then(function () {
-      return fetch(url + '?ref=' + encodeURIComponent(g.branch), { headers: headers });
+      return fetch(url + '?ref=' + encodeURIComponent(g.branch) + '&t=' + Date.now(), { headers: headers });
     }).then(function (r) {
         if (r.status === 404) return null;
         if (!r.ok) return erroGithub(r);
@@ -395,9 +397,9 @@
             method: 'PUT', headers: headers, body: JSON.stringify(corpo)
           }).then(function (r) {
             if (r.status === 409) {
-              return fetch(url + '?ref=' + encodeURIComponent(g.branch), {
-                headers: headers
-              }).then(function (rr) { return rr.ok ? rr.json() : null; })
+              return fetch(url + '?ref=' + encodeURIComponent(g.branch) +
+                '&retry=' + Date.now(), { headers: headers })
+                .then(function (rr) { return rr.ok ? rr.json() : null; })
                 .then(function (j) {
                   var novo = j ? j.sha : null;
                   if (!novo || novo === sha) {

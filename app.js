@@ -371,9 +371,7 @@
       'Accept': 'application/vnd.github+json',
       'Authorization': 'Bearer ' + g.token,
       'Content-Type': 'application/json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache'
+      'X-GitHub-Api-Version': '2022-11-28'
     };
     var conteudo = btoa(unescape(encodeURIComponent(JSON.stringify(m, null, 2))));
 

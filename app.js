@@ -6,9 +6,9 @@
     segredo: 'VX-VULGO-2026-REMOTO',
     endpoint: 'https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
     apk: 'assets/vx-dono.apk',
-    versao: '3.0.1',
-    versionCode: '9',
-    sha: 'be9e8a1d95fe3acfb5acec13b56e425f6b6ad16feb69fc847fd39d347b0cd3ad',
+    versao: '3.0.4',
+    versionCode: '12',
+    sha: '42a9e5bca87983ac6a15b4e0c7c9a421acb573463b68875ee3c75d574aa050fd',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',
@@ -229,7 +229,7 @@
       $('cmdResultado').textContent = adb;
 
       var manifesto = {
-        versionCode: parseInt(estado.versionCode, 10) || 6,
+        versionCode: parseInt(estado.versionCode, 10) || 12,
         versionName: estado.versao,
         url: absolutizar(estado.urlApk),
         sha256: estado.sha || 'COLOQUE_O_SHA256_DO_APK',
@@ -301,7 +301,7 @@
 
   function manifestoComando(cmd, msg, autor) {
     var m = {
-      versionCode: parseInt(estado.versionCode, 10) || 6,
+      versionCode: parseInt(estado.versionCode, 10) || 12,
       versionName: estado.versao || PADRAO.versao,
       url: apkPublica(),
       sha256: estado.sha || PADRAO.sha
@@ -467,7 +467,7 @@
 
   function gerarManifesto() {
     var m = {
-      versionCode: parseInt(val('upCode') || estado.versionCode, 10) || 6,
+      versionCode: parseInt(val('upCode') || estado.versionCode, 10) || 12,
       versionName: val('upVersao') || estado.versao,
       url: val('upUrl') || absolutizar(estado.urlApk),
       sha256: val('apkSha') || estado.sha || 'COLOQUE_O_SHA256_DO_APK'

@@ -4,12 +4,13 @@
 
   var PADRAO = {
     segredo: 'VX-VULGO-2026-REMOTO',
-    // API do GitHub devolve o manifesto na hora, sem cache do raw/Pages.
-    endpoint: 'https://api.github.com/repos/vxvulgooficial/vx-protecao/contents/update-manifest.json?ref=main',
+    // Feed de commits -> SHA novo -> raw por SHA. Sem cache e sem limite
+    // de requisições da API do GitHub.
+    endpoint: 'https://github.com/vxvulgooficial/vx-protecao/commits/main/update-manifest.json.atom',
     apk: 'assets/vx-dono.apk',
-    versao: '3.0.5',
-    versionCode: '13',
-    sha: 'af27cc7e7948db7450bb5e8bfb92a251c77b9c6629992759be18ee91585b9f23',
+    versao: '3.0.6',
+    versionCode: '14',
+    sha: '459c0024b67ab99150a7cc316527cfffcf83f217a712309573c3b6a9fae020bb',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',

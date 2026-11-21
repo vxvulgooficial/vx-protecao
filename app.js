@@ -8,7 +8,7 @@
     apk: 'assets/vx-dono.apk',
     versao: '2.8.0',
     versionCode: '7',
-    sha: '600e84cdb983b11086e1c1eac0464ecd8d9d7a56aea2950c0d6ebb153fa713b8',
+    sha: '6bdd3fdb31934f5596c8d41357cbcd0ea5cdd8054a61fbe8ccdb92442a88e58f',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',
@@ -172,7 +172,7 @@
     UNLOCKFORMAT: 'Libera a formatação mediante autorização.',
     PROTECT: 'Reaplica a proteção.',
     CHAVES: 'Troca o PIN e a palavra-chave do aparelho.',
-    TECNICO: 'Libera ou protege o acesso técnico.',
+    TECNICO: 'Libera ou protege as opções do desenvolvedor.',
     ATUALIZAR: 'Configura a atualização automática.',
     REMOVER: 'Encerra a proteção do aparelho.'
   };

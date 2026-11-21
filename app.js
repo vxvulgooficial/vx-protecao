@@ -4,12 +4,12 @@
 
   var PADRAO = {
     segredo: 'VX-VULGO-2026-REMOTO',
-    // Raw do GitHub atualiza na hora; o Pages leva ~40s no build.
-    endpoint: 'https://raw.githubusercontent.com/vxvulgooficial/vx-protecao/main/update-manifest.json',
+    // API do GitHub devolve o manifesto na hora, sem cache do raw/Pages.
+    endpoint: 'https://api.github.com/repos/vxvulgooficial/vx-protecao/contents/update-manifest.json?ref=main',
     apk: 'assets/vx-dono.apk',
-    versao: '3.0.4',
-    versionCode: '12',
-    sha: 'fc8d23333d1832d9eac04fcb08e2e99807ba8f18f14d78ea12a7bbade87929fb',
+    versao: '3.0.5',
+    versionCode: '13',
+    sha: 'af27cc7e7948db7450bb5e8bfb92a251c77b9c6629992759be18ee91585b9f23',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',
@@ -24,11 +24,10 @@
   var hashPalWeb = '090a4066746bbc1de347e99932b0cc605750339ecf1f1157489f6b2126dc2c64';
 
   function corrigirDonoAntigo(v) {
-    if (!v) return v;
-    return v
-      .replace('https://vxvulgo.github.io/', 'https://vxvulgooficial.github.io/')
-      .replace('https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
-        'https://raw.githubusercontent.com/vxvulgooficial/vx-protecao/main/update-manifest.json');
+    if (!v || !/^https?:\/\//i.test(v)) return v; // caminho relativo do APK
+    if (v.indexOf('vx-dono.apk') >= 0) return v;
+    if (v.indexOf('update-manifest.json') < 0) return v;
+    return PADRAO.endpoint;
   }
 
   function carregar() {

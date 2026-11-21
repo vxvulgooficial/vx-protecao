@@ -31,7 +31,7 @@
     try {
       var s = JSON.parse(localStorage.getItem(CHAVE) || '{}');
       return {
-        segredo: s.segredo || PADRAO.segredo,
+        segredo: PADRAO.segredo,
         endpoint: corrigirDonoAntigo(s.endpoint) || PADRAO.endpoint,
         versao: PADRAO.versao,
         versionCode: PADRAO.versionCode,
@@ -86,6 +86,12 @@
     t.classList.add('show');
     clearTimeout(toast._t);
     toast._t = setTimeout(function () { t.classList.remove('show'); }, 2800);
+  }
+
+  // O aparelho le o JSON com um parser simples que nao desescapa \n.
+  // Mensagens de linha unica evitam divergencia entre assinatura e texto.
+  function msgSegura(s) {
+    return String(s == null ? '' : s).replace(/[\r\n]+/g, ' ');
   }
 
   function bytesHex(buf) {
@@ -210,9 +216,9 @@
   function gerarComando() {
     atualizarCamposComando();
     var cmd = val('cmdTipo') || 'LOCK';
-    var msg = $('cmdMensagem').value;
+    var msg = msgSegura($('cmdMensagem').value);
     var autor = val('cmdAutor') || estado.autor || PADRAO.autor;
-    var segredo = val('segredo') || PADRAO.segredo;
+    var segredo = PADRAO.segredo;
     var id = 'VX-' + agora();
     var dados = id + '|' + cmd + '|' + msg;
 
@@ -240,7 +246,7 @@
       };
       if (cmd === 'LOCK' || cmd === 'ALERT' || cmd === 'AUTOR') manifesto.autor = autor;
       $('cmdManifesto').textContent = JSON.stringify(manifesto, null, 2);
-      estado.segredo = segredo;
+      estado.segredo = PADRAO.segredo;
       salvar();
       registrar('Comando gerado', cmd + ' • ' + id);
       toast('Comando assinado • ' + cmd);
@@ -300,6 +306,7 @@
   }
 
   function manifestoComando(cmd, msg, autor) {
+    msg = msgSegura(msg);
     var m = {
       versionCode: parseInt(PADRAO.versionCode, 10) || 12,
       versionName: PADRAO.versao,
@@ -308,7 +315,7 @@
     };
     if (!cmd) return Promise.resolve(m);
     var id = 'VX-' + agora();
-    return hmac(id + '|' + cmd + '|' + (msg || ''), val('segredo') || PADRAO.segredo)
+    return hmac(id + '|' + cmd + '|' + (msg || ''), PADRAO.segredo)
       .then(function (sig) {
         m.command = cmd;
         m.message = msg || '';
@@ -346,20 +353,34 @@
         return r.json().then(function (j) { return j.sha; });
       })
       .then(function (shaAtual) {
-        var corpo = {
-          message: 'VX VULGO • ' + (m.command || 'manifesto') + ' • ' +
-            (m.commandId || agora()),
-          content: conteudo,
-          branch: g.branch
-        };
-        if (shaAtual) corpo.sha = shaAtual;
-        return fetch(url, {
-          method: 'PUT', headers: headers, body: JSON.stringify(corpo)
-        });
-      })
-      .then(function (r) {
-        if (!r.ok) return erroGithub(r);
-        return r.json();
+        function enviar(sha) {
+          var corpo = {
+            message: 'VX VULGO • ' + (m.command || 'manifesto') + ' • ' +
+              (m.commandId || agora()),
+            content: conteudo,
+            branch: g.branch
+          };
+          if (sha) corpo.sha = sha;
+          return fetch(url, {
+            method: 'PUT', headers: headers, body: JSON.stringify(corpo)
+          }).then(function (r) {
+            if (r.status === 409) {
+              return fetch(url + '?ref=' + encodeURIComponent(g.branch), {
+                headers: headers
+              }).then(function (rr) { return rr.ok ? rr.json() : null; })
+                .then(function (j) {
+                  var novo = j ? j.sha : null;
+                  if (!novo || novo === sha) {
+                    throw new Error('Conflito no GitHub. Clique de novo em aplicar.');
+                  }
+                  return enviar(novo);
+                });
+            }
+            if (!r.ok) return erroGithub(r);
+            return r.json();
+          });
+        }
+        return enviar(shaAtual);
       })
       .then(function () {
         registrar('Aplicado', (m.command || 'manifesto') + ' • publicado no GitHub');
@@ -376,7 +397,7 @@
 
   function aplicarAgora(cmd, msg, autor) {
     if (!cmd) { toast('Escolha um comando'); return; }
-    var mensagem = (msg === undefined || msg === null) ? mensagemPara(cmd) : msg;
+    var mensagem = msgSegura((msg === undefined || msg === null) ? mensagemPara(cmd) : msg);
     var quem = (autor === undefined || autor === null)
       ? (estado.autor || PADRAO.autor) : autor;
     $('cmdTipo').value = cmd;
@@ -474,10 +495,10 @@
     };
     var cmd = val('upComando');
     if (cmd && cmd !== 'NENHUM') {
-      var msg = $('upMensagem') ? $('upMensagem').value : '';
+      var msg = msgSegura($('upMensagem') ? $('upMensagem').value : '');
       var autor = $('upAutor') ? $('upAutor').value.trim() : '';
       var id = 'VX-' + agora();
-      hmac(id + '|' + cmd + '|' + msg, val('segredo') || PADRAO.segredo)
+      hmac(id + '|' + cmd + '|' + msg, PADRAO.segredo)
         .then(function (sig) {
           m.command = cmd; m.message = msg; m.commandId = id; m.sig = sig;
           if (autor && (cmd === 'LOCK' || cmd === 'ALERT' || cmd === 'AUTOR')) m.autor = autor;
@@ -538,7 +559,7 @@
   }
 
   function preencherConfig() {
-    $('segredo').value = estado.segredo;
+    $('segredo').value = PADRAO.segredo;
     $('endpoint').value = estado.endpoint;
     if ($('adminUrl')) $('adminUrl').value = estado.endpoint;
     $('upCode').value = estado.versionCode;
@@ -563,7 +584,7 @@
   }
 
   function salvarConfig() {
-    estado.segredo = val('segredo') || PADRAO.segredo;
+    estado.segredo = PADRAO.segredo;
     estado.endpoint = val('endpoint') || PADRAO.endpoint;
     estado.versionCode = val('upCode') || PADRAO.versionCode;
     estado.versao = val('upVersao') || PADRAO.versao;

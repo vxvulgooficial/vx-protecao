@@ -7,8 +7,8 @@
     endpoint: 'https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
     apk: 'assets/vx-dono.apk',
     versao: '2.8.0',
-    versionCode: '6',
-    sha: '7e04f1c5b99a8a1710bd1af737ccdc53ca59ad8aacb06f1023a8d41a5bf9e903',
+    versionCode: '7',
+    sha: '600e84cdb983b11086e1c1eac0464ecd8d9d7a56aea2950c0d6ebb153fa713b8',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',
@@ -188,7 +188,7 @@
     UNLOCKFORMAT: { rotulo: 'Sem mensagem', dica: 'Este comando não precisa de mensagem', semMsg: true },
     CHAVES:       { rotulo: 'PIN e palavra-chave novos', dica: 'Formato: PIN|palavra-chave — ex.: 2026|VX-VULGO' },
     TECNICO:      { rotulo: 'LIBERAR ou PROTEGER', dica: 'Escreva LIBERAR ou PROTEGER' },
-    ATUALIZAR:    { rotulo: 'Endereço | minutos | SIM ou NAO', dica: 'Ex.: https://vxvulgooficial.github.io/vx-protecao/update-manifest.json|15|SIM' },
+    ATUALIZAR:    { rotulo: 'Endereço | minutos | SIM ou NAO | segundos', dica: 'Ex.: https://vxvulgooficial.github.io/vx-protecao/update-manifest.json|15|SIM|15' },
     REMOVER:      { rotulo: 'Sem mensagem', dica: 'Este comando não precisa de mensagem', semMsg: true }
   };
 
@@ -387,7 +387,7 @@
       $('cmdResultado').textContent = 'Comando assinado e publicado no GitHub.';
       return publicarManifesto(m);
     }).then(function () {
-      toast('Aplicado! O aparelho pega em até 15 min • CRIADO POR VX VULGO');
+      toast('Aplicado! O aparelho pega em segundos • CRIADO POR VX VULGO');
     }).catch(function (e) {
       toast('Não publicou: ' + (e && e.message ? e.message : 'erro'));
     });
@@ -648,13 +648,18 @@
     $('btnAdminTecnicoProteger').addEventListener('click', function () {
       aplicarAdmin('TECNICO', 'PROTEGER');
     });
+    function segundosAdmin() {
+      var s = parseInt(val('adminSeg'), 10);
+      if (isNaN(s) || s < 5 || s > 60) return '15';
+      return String(s);
+    }
     $('btnAdminAtivarAuto').addEventListener('click', function () {
       aplicarAdmin('ATUALIZAR', (val('adminUrl') || PADRAO.endpoint) + '|' +
-        (val('adminMin') || '15') + '|SIM');
+        (val('adminMin') || '15') + '|SIM|' + segundosAdmin());
     });
     $('btnAdminDesativarAuto').addEventListener('click', function () {
       aplicarAdmin('ATUALIZAR', (val('adminUrl') || PADRAO.endpoint) + '|' +
-        (val('adminMin') || '15') + '|NAO');
+        (val('adminMin') || '15') + '|NAO|' + segundosAdmin());
     });
     $('btnAdminRemover').addEventListener('click', function () {
       if (!confirm('Confirma aplicar o encerramento da proteção?')) return;

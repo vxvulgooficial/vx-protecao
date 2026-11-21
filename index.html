@@ -12,6 +12,7 @@
 <!-- LOGIN LOCAL -->
 <div id="login">
   <div class="login-card">
+    <img class="logo-img" src="assets/vx_logo.png" alt="VX VULGO">
     <h1>VX VULGO</h1>
     <div class="sub">CENTRAL DE PROTEÇÃO • ACESSO RESTRITO</div>
     <label for="loginPin">PIN</label>
@@ -22,13 +23,13 @@
     <div class="linha-botoes">
       <button id="btnLogin" class="btn primary" style="width:100%">ENTRAR</button>
     </div>
-    <div class="creditos">CRIADO POR VX VULGO</div>
+    <div class="creditos">CRIADO POR VX VULGO • VERSÃO 3.0</div>
   </div>
 </div>
 
 <div id="app">
   <div class="topbar">
-    <div class="logo">VX VULGO<small>CENTRAL DE PROTEÇÃO</small></div>
+    <div class="logo"><img src="assets/vx_logo.png" alt=""><span>VX VULGO<small>CENTRAL DE PROTEÇÃO</small></span></div>
     <div class="spacer"></div>
     <div class="pill"><span class="dot"></span> PAINEL ONLINE</div>
     <button id="btnSair" class="btn" style="padding:8px 12px">SAIR</button>
@@ -46,7 +47,7 @@
         <button data-page="historico">≡ &nbsp; HISTÓRICO</button>
         <button data-page="admin">⚙ &nbsp; ADMINISTRAÇÃO</button>
         <button data-page="config">⚙ &nbsp; CONFIGURAÇÕES</button>
-        <div class="rodape">OBSIDIAN &amp; EMERALD CYBER<br>CRIADO POR VX VULGO</div>
+        <div class="rodape">CRIADO POR VX VULGO<br>VERSÃO 3.0</div>
       </nav>
 
       <main>
@@ -70,20 +71,25 @@
 
           <div class="card">
             <h3 class="amber">AÇÕES RÁPIDAS</h3>
-            <div class="linha-botoes">
-              <button class="btn warn" data-acao="LOCK">ATIVAR PROTEÇÃO</button>
-              <button class="btn danger" data-acao="ALERT">ATIVAR COM ALERTA</button>
+            <div class="toggle-grid">
+              <button class="btn primary" data-acao="LOCK">TRAVAR APARELHO</button>
               <button class="btn" data-acao="RELEASE">LIBERAR APARELHO</button>
+              <button class="btn warn" data-acao="ALERT">TRAVAR COM ALERTA</button>
               <button class="btn cyan" data-acao="MESSAGE">TROCAR MENSAGEM</button>
               <button class="btn cyan" data-acao="AUTOR">TROCAR AUTOR</button>
-              <button class="btn danger" data-acao="UNLOCKFORMAT">LIBERAR FORMATAÇÃO</button>
+              <button class="btn primary" data-acao="PROTECT">TRAVAR FORMATAÇÃO</button>
+              <button class="btn" data-acao="UNLOCKFORMAT">LIBERAR FORMATAÇÃO</button>
+              <button class="btn primary" data-acao="TECNICO:PROTEGER">TRAVAR OPÇÕES DEV</button>
+              <button class="btn" data-acao="TECNICO:LIBERAR">LIBERAR OPÇÕES DEV</button>
+              <button class="btn primary" data-acao="APPSCONTROL:PROTEGER">TRAVAR CONFIG. APPS</button>
+              <button class="btn" data-acao="APPSCONTROL:LIBERAR">LIBERAR CONFIG. APPS</button>
             </div>
-            <div class="dica"><b>Um clique:</b> gera, assina e publica no GitHub. O aparelho pega em segundos.</div>
+            <div class="dica"><b>Um clique:</b> gera, assina e publica. O aparelho pega em segundos.</div>
           </div>
 
           <div class="card">
             <h3 class="cyan">APK DO APARELHO</h3>
-            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Versão pronta para reinstalar ou recuperar o aparelho após uma formatação autorizada.</p>
+            <p style="color:var(--sec);font-size:13px;line-height:1.6;margin:0">Versão pronta para reinstalar ou recuperar o aparelho após uma formatação autorizada.</p>
             <div class="linha-botoes">
               <a class="btn primary" href="assets/vx-dono.apk" download>↓ BAIXAR APK v3.0.4</a>
               <a class="btn" href="update-manifest.json" target="_blank">VER MANIFESTO</a>
@@ -142,7 +148,7 @@
               <div class="preview">
                 <h4>APARELHO PROTEGIDO</h4>
                 <div class="sub">PROTEGIDO PELO VX VULGO</div>
-                <div class="sub" style="color:#ffab00;margin-top:6px">AUTOR: <span id="previewAutor">VX VULGO</span></div>
+                <div class="sub" style="color:var(--amber);margin-top:6px">AUTOR: <span id="previewAutor">VX VULGO</span></div>
                 <div class="msg" id="previewMsg"></div>
                 <div class="contato">VX VULGO • Proteção de aparelho</div>
                 <div class="creditos">CRIADO POR VX VULGO</div>
@@ -191,7 +197,7 @@
               <div class="preview">
                 <h4>APARELHO PROTEGIDO</h4>
                 <div class="sub">PROTEGIDO PELO VX VULGO</div>
-                <div class="sub" style="color:#ffab00;margin-top:6px">AUTOR: <span id="previewAutor2">VX VULGO</span></div>
+                <div class="sub" style="color:var(--amber);margin-top:6px">AUTOR: <span id="previewAutor2">VX VULGO</span></div>
                 <div class="msg" id="previewMsg2"></div>
                 <div class="contato">VX VULGO • Proteção de aparelho</div>
                 <div class="creditos">CRIADO POR VX VULGO</div>
@@ -302,7 +308,7 @@
 
           <div class="card">
             <h3 class="amber">CHAVES DE ACESSO</h3>
-            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Troca o PIN e a palavra-chave usados para liberar o aparelho. As chaves deste painel não são alteradas.</p>
+            <p style="color:var(--sec);font-size:13px;line-height:1.6;margin:0">Troca o PIN e a palavra-chave usados para liberar o aparelho. As chaves deste painel não são alteradas.</p>
             <label for="adminPin">Novo PIN (4 a 8 caracteres)</label>
             <input id="adminPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Novo PIN">
             <label for="adminPalavra">Nova palavra-chave</label>
@@ -314,7 +320,7 @@
 
           <div class="card">
             <h3>OPÇÕES DO DESENVOLVEDOR</h3>
-            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Libera ou protege as opções do desenvolvedor no aparelho.</p>
+            <p style="color:var(--sec);font-size:13px;line-height:1.6;margin:0">Libera ou protege as opções do desenvolvedor no aparelho.</p>
             <div class="linha-botoes">
               <button id="btnAdminTecnicoLiberar" class="btn warn">APLICAR LIBERAÇÃO</button>
               <button id="btnAdminTecnicoProteger" class="btn">APLICAR PROTEÇÃO</button>
@@ -364,7 +370,7 @@
           </div>
           <div class="card">
             <h3 class="cyan">PUBLICAÇÃO AUTOMÁTICA</h3>
-            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Com o token preenchido, os botões <b>APLICAR</b> publicam o manifesto no GitHub sozinhos. O aparelho pega a ordem na próxima verificação.</p>
+            <p style="color:var(--sec);font-size:13px;line-height:1.6;margin:0">Com o token preenchido, os botões <b>APLICAR</b> publicam o manifesto no GitHub sozinhos. O aparelho pega a ordem na próxima verificação.</p>
             <label for="ghToken">Token do GitHub (com permissão de escrita no repo)</label>
             <input id="ghToken" type="password" autocomplete="off" placeholder="Cole aqui o token do GitHub">
             <label for="ghOwner">Dono do repositório</label>
@@ -382,7 +388,7 @@
           </div>
           <div class="card">
             <h3>SOBRE</h3>
-            <p style="color:#8b98a9;font-size:13px;line-height:1.7;margin:0">
+            <p style="color:var(--sec);font-size:13px;line-height:1.7;margin:0">
               <span id="versaoSite"></span><br>
               Painel web integrado ao aplicativo de proteção VX VULGO.<br>
               <span class="badge">GITHUB PAGES</span> <span class="badge">SEM DEPENDÊNCIAS</span>
@@ -392,7 +398,7 @@
       </main>
     </div>
   </div>
-  <div class="rodape-site">CRIADO POR VX VULGO • OBSIDIAN &amp; EMERALD CYBER</div>
+  <div class="rodape-site">CRIADO POR VX VULGO • VERSÃO 3.0</div>
 </div>
 
 <div id="toast" class="toast"></div>

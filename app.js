@@ -4,7 +4,8 @@
 
   var PADRAO = {
     segredo: 'VX-VULGO-2026-REMOTO',
-    endpoint: 'https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
+    // Raw do GitHub atualiza na hora; o Pages leva ~40s no build.
+    endpoint: 'https://raw.githubusercontent.com/vxvulgooficial/vx-protecao/main/update-manifest.json',
     apk: 'assets/vx-dono.apk',
     versao: '3.0.4',
     versionCode: '12',
@@ -24,7 +25,10 @@
 
   function corrigirDonoAntigo(v) {
     if (!v) return v;
-    return v.replace('https://vxvulgo.github.io/', 'https://vxvulgooficial.github.io/');
+    return v
+      .replace('https://vxvulgo.github.io/', 'https://vxvulgooficial.github.io/')
+      .replace('https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
+        'https://raw.githubusercontent.com/vxvulgooficial/vx-protecao/main/update-manifest.json');
   }
 
   function carregar() {
@@ -92,6 +96,13 @@
   // Mensagens de linha unica evitam divergencia entre assinatura e texto.
   function msgSegura(s) {
     return String(s == null ? '' : s).replace(/[\r\n]+/g, ' ');
+  }
+
+  // O leitor de JSON do aparelho nao aceita "" vazio: ele devolve duas
+  // aspas e a assinatura nao bate. Um marcador curto resolve sem mexer no APK.
+  function msgAssinar(s) {
+    var m = msgSegura(s);
+    return m.length ? m : '.';
   }
 
   function bytesHex(buf) {
@@ -216,7 +227,7 @@
   function gerarComando() {
     atualizarCamposComando();
     var cmd = val('cmdTipo') || 'LOCK';
-    var msg = msgSegura($('cmdMensagem').value);
+    var msg = msgAssinar($('cmdMensagem').value);
     var autor = val('cmdAutor') || estado.autor || PADRAO.autor;
     var segredo = PADRAO.segredo;
     var id = 'VX-' + agora();
@@ -260,8 +271,8 @@
 
   /* ---------------- PUBLICAÇÃO AUTOMÁTICA NO GITHUB ---------------- */
   function apkPublica() {
-    var ep = val('endpoint') || estado.endpoint || PADRAO.endpoint;
-    return ep.replace(/\/[^/]*$/, '/') + 'assets/vx-dono.apk';
+    // Endereço fixo e validado: o APK publicado bate com o SHA do manifesto.
+    return 'https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk';
   }
 
   function dadosGithub() {
@@ -306,7 +317,7 @@
   }
 
   function manifestoComando(cmd, msg, autor) {
-    msg = msgSegura(msg);
+    msg = msgAssinar(msg);
     var m = {
       versionCode: parseInt(PADRAO.versionCode, 10) || 12,
       versionName: PADRAO.versao,
@@ -345,7 +356,7 @@
     clearTimeout(agendarLimpeza._t);
     agendarLimpeza._t = setTimeout(function () {
       publicarManifesto(manifestoLimpo()).catch(function () { });
-    }, 45000);
+    }, 15000);
   }
 
   function publicarManifesto(m) {
@@ -418,7 +429,7 @@
 
   function aplicarAgora(cmd, msg, autor) {
     if (!cmd) { toast('Escolha um comando'); return; }
-    var mensagem = msgSegura((msg === undefined || msg === null) ? mensagemPara(cmd) : msg);
+    var mensagem = msgAssinar((msg === undefined || msg === null) ? mensagemPara(cmd) : msg);
     var quem = (autor === undefined || autor === null)
       ? (estado.autor || PADRAO.autor) : autor;
     $('cmdTipo').value = cmd;
@@ -682,7 +693,10 @@
     var rap = document.querySelectorAll('[data-acao]');
     for (var k = 0; k < rap.length; k++) {
       (function (b) {
-        b.addEventListener('click', function () { aplicarAgora(b.getAttribute('data-acao')); });
+        b.addEventListener('click', function () {
+          var partes = (b.getAttribute('data-acao') || '').split(':');
+          aplicarAgora(partes[0], partes.length > 1 ? partes[1] : undefined);
+        });
       })(rap[k]);
     }
 

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VX VULGO • Central de Proteção</title>
+  <meta name="description" content="Central de gerenciamento VX VULGO — comandos, mensagens, autor da proteção, alertas e atualizações do aparelho protegido.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN LOCAL -->
+<div id="login">
+  <div class="login-card">
+    <h1>VX VULGO</h1>
+    <div class="sub">CENTRAL DE PROTEÇÃO • ACESSO RESTRITO</div>
+    <label for="loginPin">PIN</label>
+    <input id="loginPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Seu PIN">
+    <label for="loginPalavra">Palavra-chave secreta</label>
+    <input id="loginPalavra" type="password" autocomplete="off" placeholder="Palavra-chave">
+    <div id="loginErro" style="color:#ff4d5e;font-size:11px;margin-top:10px;min-height:16px"></div>
+    <div class="linha-botoes">
+      <button id="btnLogin" class="btn primary" style="width:100%">ENTRAR</button>
+    </div>
+    <div class="creditos">CRIADO POR VX VULGO</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="logo">VX VULGO<small>CENTRAL DE PROTEÇÃO</small></div>
+    <div class="spacer"></div>
+    <div class="pill"><span class="dot"></span> PAINEL ONLINE</div>
+    <button id="btnSair" class="btn" style="padding:8px 12px">SAIR</button>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <nav class="nav">
+        <button class="ativo" data-page="geral">◈ &nbsp; VISÃO GERAL</button>
+        <button data-page="comandos">⌁ &nbsp; COMANDOS</button>
+        <button data-page="mensagem">✎ &nbsp; TELA E AUTOR</button>
+        <button data-page="atualizacoes">⇩ &nbsp; ATUALIZAÇÕES</button>
+        <button data-page="conexao">◎ &nbsp; CONEXÃO</button>
+        <div class="sep"></div>
+        <button data-page="historico">≡ &nbsp; HISTÓRICO</button>
+        <button data-page="admin">⚙ &nbsp; ADMINISTRAÇÃO</button>
+        <button data-page="config">⚙ &nbsp; CONFIGURAÇÕES</button>
+        <div class="rodape">OBSIDIAN &amp; EMERALD CYBER<br>CRIADO POR VX VULGO</div>
+      </nav>
+
+      <main>
+        <!-- VISÃO GERAL -->
+        <section id="pag-geral" class="pagina ativa">
+          <div class="page-head">
+            <h2>VISÃO GERAL</h2>
+            <p>Controle do aparelho protegido. As ações abaixo são preparadas aqui e enviadas pelo manifesto ou por comando assinado.</p>
+          </div>
+
+          <div class="card">
+            <h3>ESTADO DA PROTEÇÃO</h3>
+            <div class="status-grid">
+              <div class="status-item"><div class="rot">APARELHO</div><div class="val ok">PROTEGIDO</div></div>
+              <div class="status-item"><div class="rot">TELA DE PROTEÇÃO</div><div class="val ok">DISPONÍVEL</div></div>
+              <div class="status-item"><div class="rot">TELA E AUTOR</div><div class="val ok">CONFIGURÁVEIS</div></div>
+              <div class="status-item"><div class="rot">ATUALIZAÇÕES</div><div class="val ok">AUTOMÁTICAS</div></div>
+            </div>
+            <div class="aviso">O estado acima reflete a configuração enviada ao aparelho. Para conferir o estado em tempo real, use a aba <b>CONEXÃO</b>.</div>
+          </div>
+
+          <div class="card">
+            <h3 class="amber">AÇÕES RÁPIDAS</h3>
+            <div class="linha-botoes">
+              <button class="btn warn" data-acao="LOCK">ATIVAR PROTEÇÃO</button>
+              <button class="btn danger" data-acao="ALERT">ATIVAR COM ALERTA</button>
+              <button class="btn" data-acao="RELEASE">LIBERAR APARELHO</button>
+              <button class="btn cyan" data-acao="MESSAGE">TROCAR MENSAGEM</button>
+              <button class="btn cyan" data-acao="AUTOR">TROCAR AUTOR</button>
+              <button class="btn danger" data-acao="UNLOCKFORMAT">LIBERAR FORMATAÇÃO</button>
+            </div>
+            <div class="dica"><b>Um clique:</b> gera, assina e publica no GitHub. O aparelho pega na próxima verificação (até 15 min).</div>
+          </div>
+
+          <div class="card">
+            <h3 class="cyan">APK DO APARELHO</h3>
+            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Versão pronta para reinstalar ou recuperar o aparelho após uma formatação autorizada.</p>
+            <div class="linha-botoes">
+              <a class="btn primary" href="assets/vx-dono.apk" download>↓ BAIXAR APK v2.8.0</a>
+              <a class="btn" href="update-manifest.json" target="_blank">VER MANIFESTO</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- COMANDOS -->
+        <section id="pag-comandos" class="pagina">
+          <div class="page-head">
+            <h2>COMANDOS</h2>
+            <p>Escolha o que o aparelho deve fazer. O comando sai assinado e pode ser enviado pelo manifesto ou direto.</p>
+          </div>
+          <div class="card">
+            <h3>ENTENDA OS CAMPOS</h3>
+            <div class="dica" style="line-height:1.9">
+              <b>Mensagem</b> = o texto que aparece na tela do aparelho.<br>
+              <b>Autor</b> = o nome que aparece em destaque como responsável pela proteção. Você define na aba <b>TELA E AUTOR</b> e ele já vem preenchido aqui. O aparelho <b>não fala nada</b>.<br>
+              <b>ALERT</b> = abre a mesma tela de proteção com <b>som de alerta e vibração</b>. <b>LOCK</b> abre a tela em silêncio.<br>
+              <b>Comandos de administração</b> (CHAVES, TECNICO, ATUALIZAR, AUTOR) usam o campo de mensagem para os dados. O formulário mostra o formato certo para cada um.
+            </div>
+          </div>
+          <div class="cards-2">
+            <div class="card">
+              <h3>NOVO COMANDO</h3>
+              <label for="cmdTipo">Tipo de comando</label>
+              <select id="cmdTipo">
+                <option value="LOCK">LOCK — ativar proteção (sem som)</option>
+                <option value="ALERT">ALERT — ativar com alerta sonoro</option>
+                <option value="RELEASE">RELEASE — liberar aparelho</option>
+                <option value="MESSAGE">MESSAGE — trocar mensagem</option>
+                <option value="AUTOR">AUTOR — trocar o autor da proteção</option>
+                <option value="PROTECT">PROTECT — reaplicar proteção</option>
+                <option value="UNLOCKFORMAT">UNLOCKFORMAT — liberar formatação</option>
+                <option value="CHAVES">CHAVES — trocar PIN e palavra-chave</option>
+                <option value="TECNICO">TECNICO — acesso técnico</option>
+                <option value="ATUALIZAR">ATUALIZAR — atualizações automáticas</option>
+                <option value="REMOVER">REMOVER — encerrar proteção</option>
+              </select>
+              <div id="cmdAjuda" class="dica"></div>
+              <label for="cmdMensagem" id="lblCmdMensagem">Mensagem exibida na tela</label>
+              <textarea id="cmdMensagem" placeholder="Texto que aparece para quem encontrar o aparelho"></textarea>
+              <div id="campoAutor">
+                <label for="cmdAutor">Autor exibido na tela</label>
+                <input id="cmdAutor" type="text" placeholder="Ex.: VX VULGO">
+              </div>
+              <div class="linha-botoes">
+                <button id="btnAplicar" class="btn primary">APLICAR AGORA</button>
+                <button id="btnGerar" class="btn">SÓ GERAR (MANUAL)</button>
+              </div>
+              <div class="dica">APLICAR publica sozinho no GitHub. SÓ GERAR deixa o comando pronto para você copiar.</div>
+            </div>
+            <div class="card">
+              <h3 class="cyan">PRÉVIA DA TELA</h3>
+              <div class="preview">
+                <h4>APARELHO PROTEGIDO</h4>
+                <div class="sub">PROTEGIDO PELO VX VULGO</div>
+                <div class="sub" style="color:#ffab00;margin-top:6px">AUTOR: <span id="previewAutor">VX VULGO</span></div>
+                <div class="msg" id="previewMsg"></div>
+                <div class="contato">VX VULGO • Proteção de aparelho</div>
+                <div class="creditos">CRIADO POR VX VULGO</div>
+              </div>
+              <div class="linha-botoes">
+                <button id="btnSalvarMensagem" class="btn">SALVAR COMO PADRÃO</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="amber">COMANDO DIRETO (COPIAR E EXECUTAR)</h3>
+            <pre class="saida" id="cmdResultado">Gere um comando para ver o conteúdo.</pre>
+            <div class="linha-botoes">
+              <button id="btnCopiarCmd" class="btn cyan">COPIAR COMANDO</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>MANIFESTO COM COMANDO</h3>
+            <pre class="saida" id="cmdManifesto">Gere um comando para ver o conteúdo.</pre>
+            <div class="linha-botoes">
+              <button id="btnCopiarManifestoCmd" class="btn">COPIAR JSON</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TELA E AUTOR -->
+        <section id="pag-mensagem" class="pagina">
+          <div class="page-head">
+            <h2>TELA E AUTOR</h2>
+            <p>Monte a tela de proteção: o texto que aparece e o nome de quem aparece como autor. O aparelho não fala — só o comando ALERT faz som.</p>
+          </div>
+          <div class="cards-2">
+            <div class="card">
+              <h3>TEXTO E AUTOR</h3>
+              <label for="msgTela">Mensagem principal</label>
+              <textarea id="msgTela" placeholder="Texto que aparece para quem encontrar o aparelho"></textarea>
+              <label for="msgAutor">Autor da proteção</label>
+              <input id="msgAutor" type="text" placeholder="Ex.: VX VULGO">
+              <div class="linha-botoes">
+                <button id="btnSalvarMensagem2" class="btn primary">SALVAR TEXTOS</button>
+              </div>
+              <div class="aviso">Isso é o padrão: já vem preenchido quando você gera LOCK ou ALERT. Quiser mudar só o autor sem ativar a tela, use o comando <b>AUTOR</b>. O nome aparece em destaque na tela do aparelho.</div>
+            </div>
+            <div class="card">
+              <h3 class="cyan">RESULTADO NO APARELHO</h3>
+              <div class="preview">
+                <h4>APARELHO PROTEGIDO</h4>
+                <div class="sub">PROTEGIDO PELO VX VULGO</div>
+                <div class="sub" style="color:#ffab00;margin-top:6px">AUTOR: <span id="previewAutor2">VX VULGO</span></div>
+                <div class="msg" id="previewMsg2"></div>
+                <div class="contato">VX VULGO • Proteção de aparelho</div>
+                <div class="creditos">CRIADO POR VX VULGO</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ATUALIZAÇÕES -->
+        <section id="pag-atualizacoes" class="pagina">
+          <div class="page-head">
+            <h2>ATUALIZAÇÕES</h2>
+            <p>Prepare o manifesto de atualização: versão, endereço do APK, SHA-256 e, se quiser, um comando já assinado.</p>
+          </div>
+          <div class="cards-2">
+            <div class="card">
+              <h3>APK</h3>
+              <label for="fileApk">Selecione o APK final</label>
+              <input id="fileApk" type="file" accept=".apk" style="font-size:12px">
+              <div class="linha-botoes">
+                <button id="btnVerApk" class="btn cyan">CALCULAR SHA-256</button>
+              </div>
+              <div id="apkNome" class="dica"></div>
+              <label for="apkSha">SHA-256</label>
+              <input id="apkSha" type="text" placeholder="64 caracteres hexadecimais">
+              <label for="upCode">Código da versão</label>
+              <input id="upCode" type="number" min="1">
+              <label for="upVersao">Nome da versão</label>
+              <input id="upVersao" type="text">
+              <label for="upUrl">Endereço do APK</label>
+              <input id="upUrl" type="text">
+            </div>
+            <div class="card">
+              <h3 class="amber">COMANDO EMBUTIDO (OPCIONAL)</h3>
+              <label for="upComando">Comando</label>
+              <select id="upComando">
+                <option value="NENHUM">NENHUM — só atualização</option>
+                <option value="LOCK">LOCK — ativar proteção (sem som)</option>
+                <option value="ALERT">ALERT — ativar com alerta sonoro</option>
+                <option value="RELEASE">RELEASE — liberar</option>
+                <option value="MESSAGE">MESSAGE — trocar mensagem</option>
+                <option value="AUTOR">AUTOR — trocar o autor da proteção</option>
+                <option value="PROTECT">PROTECT — reaplicar proteção</option>
+                <option value="UNLOCKFORMAT">UNLOCKFORMAT — liberar formatação</option>
+                <option value="CHAVES">CHAVES — trocar PIN e palavra-chave</option>
+                <option value="TECNICO">TECNICO — acesso técnico</option>
+                <option value="ATUALIZAR">ATUALIZAR — atualizações automáticas</option>
+                <option value="REMOVER">REMOVER — encerrar proteção</option>
+              </select>
+              <label for="upMensagem">Mensagem</label>
+              <textarea id="upMensagem" placeholder="Mensagem da tela de proteção"></textarea>
+              <label for="upAutor">Autor da proteção</label>
+              <input id="upAutor" type="text" placeholder="Ex.: VX VULGO">
+              <div class="aviso">O APK é verificado por SHA-256 e assinatura antes da instalação. Se o hash não bater, nada é instalado.</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>MANIFESTO GERADO</h3>
+            <pre class="saida" id="upResultado">Preencha os campos e clique em GERAR.</pre>
+            <div class="linha-botoes">
+              <button id="btnGerarManifesto" class="btn primary">GERAR MANIFESTO</button>
+              <button id="btnCopiarManifesto" class="btn cyan">COPIAR JSON</button>
+              <button id="btnBaixarManifesto" class="btn">BAIXAR JSON</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONEXÃO -->
+        <section id="pag-conexao" class="pagina">
+          <div class="page-head">
+            <h2>CONEXÃO</h2>
+            <p>Consulte o manifesto publicado para saber o que o aparelho vai encontrar na próxima verificação automática.</p>
+          </div>
+          <div class="card">
+            <h3>ENDEREÇO DO MANIFESTO</h3>
+            <label for="endpoint">URL</label>
+            <input id="endpoint" type="text">
+            <div class="linha-botoes">
+              <button id="btnConectar" class="btn primary">CONSULTAR</button>
+            </div>
+            <div class="status-grid" style="margin-top:18px">
+              <div class="status-item"><div class="rot">RESULTADO</div><div class="val" id="connEstado">Aguardando consulta</div></div>
+            </div>
+            <pre class="saida" id="connJson"></pre>
+          </div>
+        </section>
+
+        <!-- HISTÓRICO -->
+        <section id="pag-historico" class="pagina">
+          <div class="page-head">
+            <h2>HISTÓRICO</h2>
+            <p>Ações feitas neste navegador. Fica salvo somente no seu computador.</p>
+          </div>
+          <div class="card">
+            <h3>REGISTRO LOCAL</h3>
+            <div id="historicoLista" class="saida"></div>
+          </div>
+        </section>
+
+        <!-- ADMINISTRAÇÃO -->
+        <section id="pag-admin" class="pagina">
+          <div class="page-head">
+            <h2>ADMINISTRAÇÃO</h2>
+            <p>Configurações restritas do aparelho protegido. Cada ação gera, assina e publica o comando no GitHub na hora.</p>
+          </div>
+
+          <div class="card">
+            <h3 class="amber">CHAVES DE ACESSO</h3>
+            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Troca o PIN e a palavra-chave usados para liberar o aparelho. As chaves deste painel não são alteradas.</p>
+            <label for="adminPin">Novo PIN (4 a 8 caracteres)</label>
+            <input id="adminPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Novo PIN">
+            <label for="adminPalavra">Nova palavra-chave</label>
+            <input id="adminPalavra" type="password" autocomplete="off" placeholder="Nova palavra-chave">
+            <div class="linha-botoes">
+              <button id="btnAdminChaves" class="btn primary">APLICAR TROCA DE CHAVES</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>ACESSO TÉCNICO</h3>
+            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Libera ou protege o acesso técnico do aparelho.</p>
+            <div class="linha-botoes">
+              <button id="btnAdminTecnicoLiberar" class="btn warn">APLICAR LIBERAÇÃO</button>
+              <button id="btnAdminTecnicoProteger" class="btn">APLICAR PROTEÇÃO</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>ATUALIZAÇÃO AUTOMÁTICA</h3>
+            <label for="adminUrl">Endereço do manifesto</label>
+            <input id="adminUrl" type="text">
+            <label for="adminMin">Intervalo em minutos (mín. 15)</label>
+            <input id="adminMin" type="number" min="15" value="15">
+            <div class="linha-botoes">
+              <button id="btnAdminAtivarAuto" class="btn primary">APLICAR ATIVAÇÃO</button>
+              <button id="btnAdminDesativarAuto" class="btn">APLICAR DESATIVAÇÃO</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="amber">ENCERRAR PROTEÇÃO</h3>
+            <div class="aviso">Esta ação encerra a proteção do aparelho. Só use se você realmente quiser desativá-la.</div>
+            <div class="linha-botoes">
+              <button id="btnAdminRemover" class="btn danger">APLICAR ENCERRAMENTO</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONFIGURAÇÕES -->
+        <section id="pag-config" class="pagina">
+          <div class="page-head">
+            <h2>CONFIGURAÇÕES</h2>
+            <p>Ajustes do painel. Guarde uma cópia do segredo de assinatura — ele precisa ser o mesmo configurado no aparelho.</p>
+          </div>
+          <div class="card">
+            <h3 class="amber">ASSINATURA E ENDEREÇOS</h3>
+            <label for="segredo">Segredo de assinatura dos comandos</label>
+            <input id="segredo" type="password">
+            <div class="dica">Deve ser igual ao segredo usado pelo aparelho: VX-VULGO-2026-REMOTO.</div>
+            <label for="endpoint">Endereço do manifesto</label>
+            <input id="endpoint2" type="text" style="display:none">
+            <div class="aviso">O endereço do manifesto é editado na aba CONEXÃO.</div>
+            <div class="linha-botoes">
+              <button id="btnSalvarConfig" class="btn primary">SALVAR CONFIGURAÇÕES</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="cyan">PUBLICAÇÃO AUTOMÁTICA</h3>
+            <p style="color:#8b98a9;font-size:13px;line-height:1.6;margin:0">Com o token preenchido, os botões <b>APLICAR</b> publicam o manifesto no GitHub sozinhos. O aparelho pega a ordem na próxima verificação.</p>
+            <label for="ghToken">Token do GitHub (com permissão de escrita no repo)</label>
+            <input id="ghToken" type="password" autocomplete="off" placeholder="Cole aqui o token do GitHub">
+            <label for="ghOwner">Dono do repositório</label>
+            <input id="ghOwner" type="text" placeholder="vxvulgooficial">
+            <label for="ghRepo">Nome do repositório</label>
+            <input id="ghRepo" type="text" placeholder="vx-protecao">
+            <label for="ghBranch">Branch</label>
+            <input id="ghBranch" type="text" placeholder="main">
+            <label for="ghCaminho">Arquivo do manifesto</label>
+            <input id="ghCaminho" type="text" placeholder="update-manifest.json">
+            <div class="linha-botoes">
+              <button id="btnTestarGithub" class="btn cyan">TESTAR PUBLICAÇÃO</button>
+            </div>
+            <div class="aviso">O token fica salvo só neste navegador e nunca aparece nos comandos. Se trocar de navegador, é só colar de novo. Sem token, use <b>SÓ GERAR</b> e publique o JSON na mão.</div>
+          </div>
+          <div class="card">
+            <h3>SOBRE</h3>
+            <p style="color:#8b98a9;font-size:13px;line-height:1.7;margin:0">
+              <span id="versaoSite"></span><br>
+              Painel web integrado ao aplicativo de proteção VX VULGO.<br>
+              <span class="badge">GITHUB PAGES</span> <span class="badge">SEM DEPENDÊNCIAS</span>
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="rodape-site">CRIADO POR VX VULGO • OBSIDIAN &amp; EMERALD CYBER</div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

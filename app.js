@@ -8,7 +8,7 @@
     apk: 'assets/vx-dono.apk',
     versao: '3.0.4',
     versionCode: '12',
-    sha: '42a9e5bca87983ac6a15b4e0c7c9a421acb573463b68875ee3c75d574aa050fd',
+    sha: 'fc8d23333d1832d9eac04fcb08e2e99807ba8f18f14d78ea12a7bbade87929fb',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',

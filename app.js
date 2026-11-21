@@ -6,9 +6,9 @@
     segredo: 'VX-VULGO-2026-REMOTO',
     endpoint: 'https://vxvulgooficial.github.io/vx-protecao/update-manifest.json',
     apk: 'assets/vx-dono.apk',
-    versao: '2.8.0',
-    versionCode: '7',
-    sha: '6bdd3fdb31934f5596c8d41357cbcd0ea5cdd8054a61fbe8ccdb92442a88e58f',
+    versao: '3.0.1',
+    versionCode: '9',
+    sha: 'be9e8a1d95fe3acfb5acec13b56e425f6b6ad16feb69fc847fd39d347b0cd3ad',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',
@@ -173,6 +173,7 @@
     PROTECT: 'Reaplica a proteção.',
     CHAVES: 'Troca o PIN e a palavra-chave do aparelho.',
     TECNICO: 'Libera ou protege as opções do desenvolvedor.',
+    APPSCONTROL: 'Libera ou bloqueia as configurações de aplicativos no aparelho.',
     ATUALIZAR: 'Configura a atualização automática.',
     REMOVER: 'Encerra a proteção do aparelho.'
   };
@@ -188,6 +189,7 @@
     UNLOCKFORMAT: { rotulo: 'Sem mensagem', dica: 'Este comando não precisa de mensagem', semMsg: true },
     CHAVES:       { rotulo: 'PIN e palavra-chave novos', dica: 'Formato: PIN|palavra-chave — ex.: 2026|VX-VULGO' },
     TECNICO:      { rotulo: 'LIBERAR ou PROTEGER', dica: 'Escreva LIBERAR ou PROTEGER' },
+    APPSCONTROL:  { rotulo: 'LIBERAR ou PROTEGER', dica: 'Escreva LIBERAR ou PROTEGER' },
     ATUALIZAR:    { rotulo: 'Endereço | minutos | SIM ou NAO | segundos', dica: 'Ex.: https://vxvulgooficial.github.io/vx-protecao/update-manifest.json|15|SIM|15' },
     REMOVER:      { rotulo: 'Sem mensagem', dica: 'Este comando não precisa de mensagem', semMsg: true }
   };

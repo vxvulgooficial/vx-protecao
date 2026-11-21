@@ -1,10 +1,6 @@
 {
-  "versionCode": 13,
-  "versionName": "3.0.5",
-  "url": "https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk",
-  "sha256": "af27cc7e7948db7450bb5e8bfb92a251c77b9c6629992759be18ee91585b9f23",
-  "command": "PING",
-  "message": ".",
-  "commandId": "VX-TEST-3-1795294310672",
-  "sig": "0"
+    "url":  "https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk",
+    "versionCode":  14,
+    "versionName":  "3.0.6",
+    "sha256":  "459c0024b67ab99150a7cc316527cfffcf83f217a712309573c3b6a9fae020bb"
 }

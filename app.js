@@ -8,9 +8,9 @@
     // de requisições da API do GitHub.
     endpoint: 'https://github.com/vxvulgooficial/vx-protecao/commits/main/update-manifest.json.atom',
     apk: 'assets/vx-dono.apk',
-    versao: '3.0.8',
-    versionCode: '16',
-    sha: '80e566658185b7f4a0605d6f4b92f3753851ee5c66305ae6178c7f173ce0c564',
+    versao: '3.0.9',
+    versionCode: '17',
+    sha: 'ca0399725f31164bb680e9602d6446327835dcc2d628a5643c90c15b1e758ab1',
     autor: 'VX VULGO',
     ghOwner: 'vxvulgooficial',
     ghRepo: 'vx-protecao',

@@ -1,18 +1,20 @@
-/* VX VULGO • OBSIDIAN & EMERALD CYBER — painel web */
+/* VX VULGO • paleta oficial v3 — painel web */
 :root {
-  --bg: #07090d;
-  --bg2: #0c1016;
-  --card: #111722;
-  --card2: #151d2a;
-  --borda: #202a3a;
-  --texto: #e6edf3;
-  --sec: #8b98a9;
-  --mono: #7f8da3;
-  --emerald: #00e676;
-  --emerald-dim: rgba(0, 230, 118, 0.12);
-  --cyan: #4fd1e0;
-  --amber: #ffb020;
-  --red: #ff4d5e;
+  --bg: #05070C;
+  --bg2: #0A0F18;
+  --card: #0D1420;
+  --card2: #121B2B;
+  --borda: #12306B;
+  --texto: #FFFFFF;
+  --sec: #929BAA;
+  --mono: #929BAA;
+  --blue: #064BFF;
+  --blue-dim: rgba(6, 75, 255, 0.16);
+  --emerald: #00E58A;
+  --emerald-dim: rgba(0, 229, 138, 0.12);
+  --cyan: #008CFF;
+  --amber: #FFB000;
+  --red: #FF5A6A;
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +35,7 @@ code, textarea, input, .mono {
 #login {
   position: fixed; inset: 0; z-index: 50;
   display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(circle at 50% 20%, #101826 0%, var(--bg) 65%);
+  background: radial-gradient(circle at 50% 12%, #0A1C4A 0%, var(--bg) 68%);
   padding: 20px;
 }
 #login.hidden { display: none; }
@@ -45,7 +47,10 @@ code, textarea, input, .mono {
   padding: 30px;
   box-shadow: 0 24px 70px rgba(0,0,0,.6);
 }
-.login-card h1 { margin: 0; font-size: 22px; letter-spacing: .14em; color: var(--emerald); }
+.login-card { text-align: center; }
+.login-card .logo-img { width: 78px; height: 78px; object-fit: contain; margin-bottom: 8px; }
+.login-card h1 { margin: 0; font-size: 22px; letter-spacing: .14em; color: var(--texto); }
+.login-card label { text-align: left; }
 .login-card .sub { margin: 6px 0 24px; color: var(--sec); font-size: 12px; letter-spacing: .08em; }
 .login-card .creditos { margin-top: 20px; color: var(--amber); font-size: 10px; font-weight: 700; }
 
@@ -59,7 +64,8 @@ code, textarea, input, .mono {
   background: var(--bg2);
   position: sticky; top: 0; z-index: 20;
 }
-.logo { font-weight: 800; letter-spacing: .14em; color: var(--emerald); font-size: 16px; }
+.logo { display: flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: .14em; color: var(--texto); font-size: 16px; }
+.logo img { width: 34px; height: 34px; object-fit: contain; }
 .logo small { display: block; color: var(--sec); font-size: 9px; letter-spacing: .18em; margin-top: 2px; }
 .topbar .spacer { flex: 1; }
 .pill {
@@ -134,12 +140,16 @@ button.btn {
   border: 1px solid var(--borda);
 }
 button.btn:hover { filter: brightness(1.18); }
-button.btn.primary { background: var(--emerald); color: #04140c; border-color: var(--emerald); }
+button.btn.primary { background: var(--blue); color: #FFFFFF; border-color: var(--blue); box-shadow: 0 0 18px rgba(6,75,255,.28); }
 button.btn.warn { background: transparent; color: var(--amber); border-color: rgba(255,176,32,.4); }
 button.btn.danger { background: transparent; color: var(--red); border-color: rgba(255,77,94,.4); }
 button.btn.cyan { background: transparent; color: var(--cyan); border-color: rgba(79,209,224,.35); }
 button.btn:disabled { opacity: .5; cursor: not-allowed; }
 .linha-botoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.toggle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 4px; }
+.toggle-grid .btn { width: 100%; text-align: left; padding: 13px 15px; }
+.nav button.ativo { background: var(--blue-dim); color: var(--cyan); }
+.card h3 { color: var(--cyan); }
 
 .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
 .status-item {

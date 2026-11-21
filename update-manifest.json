@@ -2,5 +2,9 @@
   "versionCode": 14,
   "versionName": "3.0.6",
   "url": "https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk",
-  "sha256": "459c0024b67ab99150a7cc316527cfffcf83f217a712309573c3b6a9fae020bb"
+  "sha256": "459c0024b67ab99150a7cc316527cfffcf83f217a712309573c3b6a9fae020bb",
+  "command": "RELEASE",
+  "message": ".",
+  "commandId": "VX-20261121-175548-83",
+  "sig": "aaa246356d08e592456b8d0b32987667e0683ab46f191c83f50afd8f0d11c07a"
 }

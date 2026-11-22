@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VX VULGO • Provisionamento por QR</title>
+  <meta name="description" content="QR oficial para transformar o VX Proteção em Device Owner pelo setup do Android.">
+  <style>
+    :root { --bg:#05070c; --card:#0c1220; --linha:#1c2a44; --azul:#2d8cff; --neon:#00d9ff; --txt:#e7f0ff; --sec:#91a5c4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 50% 0%,#0d1a30 0%,var(--bg) 55%); color:var(--txt); font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; padding:28px 16px 60px; }
+    .wrap { max-width:920px; margin:0 auto; }
+    .topo { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+    .topo img { width:54px; height:54px; object-fit:contain; }
+    h1 { font-size:22px; letter-spacing:2px; margin:0; }
+    .topo small { display:block; color:var(--sec); font-size:11px; letter-spacing:1px; }
+    .card { background:var(--card); border:1px solid var(--linha); border-radius:14px; padding:22px; margin-bottom:18px; box-shadow:0 12px 40px #0008; }
+    h2 { font-size:14px; letter-spacing:1.5px; color:var(--neon); margin:0 0 14px; }
+    .qrbox { text-align:center; background:#fff; border-radius:12px; padding:18px; }
+    .qrbox img { max-width:100%; width:420px; height:auto; display:block; margin:0 auto; }
+    .tag { display:inline-block; border:1px solid var(--azul); color:var(--azul); border-radius:999px; padding:3px 12px; font-size:11px; letter-spacing:1px; margin-right:6px; }
+    ol,ul { padding-left:22px; }
+    li { margin:7px 0; }
+    code { background:#07101f; border:1px solid var(--linha); border-radius:6px; padding:2px 6px; color:var(--neon); word-break:break-all; }
+    pre { background:#07101f; border:1px solid var(--linha); border-radius:8px; padding:12px; overflow:auto; color:var(--sec); font-size:12px; }
+    .aviso { border-left:3px solid #ffb02e; background:#2a1d08; padding:10px 14px; border-radius:6px; color:#ffd58a; }
+    .ok { border-left:3px solid #28d17c; background:#08251a; padding:10px 14px; border-radius:6px; color:#9df5c4; }
+    a { color:var(--neon); }
+    .pequeno { color:var(--sec); font-size:12px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topo">
+    <img src="assets/vx_logo.png" alt="VX VULGO">
+    <div><h1>VX VULGO</h1><small>PROVISIONAMENTO DEVICE OWNER • V3.1.1 (BUILD 20)</small></div>
+  </div>
+
+  <div class="card">
+    <h2>QR DE PROVISIONAMENTO</h2>
+    <div class="qrbox">
+      <img src="assets/vx-protecao-provisionamento-qr.png" alt="QR de provisionamento do VX Proteção">
+    </div>
+    <p class="pequeno" style="text-align:center;margin-top:12px">Escaneie com a câmera do aparelho <b>novo / em factory reset</b>, na primeira tela do setup.</p>
+  </div>
+
+  <div class="card">
+    <h2>COMO USAR NO REALME (ANDROID 12+)</h2>
+    <ol>
+      <li>Faça <b>factory reset</b> e mantenha o aparelho <b>sem conta Google adicionada</b>.</li>
+      <li>Na primeira tela de boas-vindas, toque <b>6 vezes seguidas</b> em qualquer ponto livre. Se aparecer a tela de QR, escaneie o QR acima com a câmera.</li>
+      <li>Conecte num Wi-Fi. O setup baixa o APK, valida os dois checksums e instala o <code>vx.dono.app</code> como <b>Device Owner</b>.</li>
+      <li>Quando aparecer a etapa de finalização, o app responde automaticamente — não precisa tocar em nada.</li>
+      <li>Ao entrar, verifique: <code>adb shell dumpsys device_policy</code> deve mostrar <code>vx.dono.app/.DonoAdminReceiver</code> como Device Owner.</li>
+    </ol>
+    <div class="aviso">Se o Realme não tiver o gatilho dos 6 toques, o QR não aparece. Isso é decisão do fabricante — o único caminho alternativo sem root é o ADB com <code>dpm set-device-owner</code> antes de adicionar conta.</div>
+  </div>
+
+  <div class="card">
+    <h2>DADOS DO QR</h2>
+    <p><span class="tag">COMPONENTE</span> <code>vx.dono.app/.DonoAdminReceiver</code></p>
+    <p><span class="tag">VERSÃO</span> 3.1.1 • versionCode 20</p>
+    <p><span class="tag">APK</span> <a href="assets/vx-dono.apk">vx-dono.apk</a></p>
+    <p><span class="tag">SHA-256 DO APK</span> <code>897588fe8d5740e177b77b32651c22beae98429bf63ebc00281031a1027f9b9a</code></p>
+    <p><span class="tag">CHECKSUM APK</span> <code>iXWI_o1XQOF3t3syZRwivq6YQpv2PrwAKBAxoQJ_m5o</code></p>
+    <p><span class="tag">CHECKSUM ASSINATURA</span> <code>EOboK5UCV5nOPfLBRIym9PZSMo_QeDczQUzO9OArG8k</code></p>
+    <p class="pequeno">Os handlers <code>GET_PROVISIONING_MODE</code> e <code>ADMIN_POLICY_COMPLIANCE</code> estão presentes no APK — sem eles o Android 12+ falharia com “missing components or corrupted”.</p>
+  </div>
+
+  <div class="card">
+    <h2>PAYLOAD CRU (JSON)</h2>
+    <pre>{
+  "android.app.extra.PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME": "vx.dono.app/.DonoAdminReceiver",
+  "android.app.extra.PROVISIONING_DEVICE_ADMIN_PACKAGE_DOWNLOAD_LOCATION": "https://vxvulgooficial.github.io/vx-protecao/assets/vx-dono.apk",
+  "android.app.extra.PROVISIONING_DEVICE_ADMIN_PACKAGE_CHECKSUM": "iXWI_o1XQOF3t3syZRwivq6YQpv2PrwAKBAxoQJ_m5o",
+  "android.app.extra.PROVISIONING_DEVICE_ADMIN_SIGNATURE_CHECKSUM": "EOboK5UCV5nOPfLBRIym9PZSMo_QeDczQUzO9OArG8k"
+}</pre>
+    <div class="ok">Se precisar gerar o QR de novo: rode <code>dpc/qr/gerar_qr.py</code> depois de recompilar o APK. Ele recalcula os dois checksums sozinho.</div>
+  </div>
+
+  <p class="pequeno" style="text-align:center">CRIADO POR VX VULGO • VX PROTEÇÃO 3.1.1</p>
+</div>
+</body>
+</html>
